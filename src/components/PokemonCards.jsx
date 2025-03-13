@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 export default function PokemonCards({ name, source }) {
   const [cardData, setCardData] = useState({
     name,
-    image: "https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fphotography&psig=AOvVaw3NQeKdWrFaf1RoeFsw6Ykm&ust=1741779653481000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCOiRjYD5gYwDFQAAAAAdAAAAABAE",
+    image: "https://via.placeholder.com/150",
     height: "",
     weight: "",
     speed: "",
@@ -36,28 +36,70 @@ export default function PokemonCards({ name, source }) {
   }, [source]);
 
   return (
-    <div className="card">
-      <img src={cardData.image} alt={cardData.name} className="pokemon-image" />
-      <h2 className="pokemon-name">{cardData.name}</h2>
-      <div className="pokemon-info">
-        <h3>
-          Type: <span className="badge">{cardData.types.join(", ")}</span>
-        </h3>
-        <h3>
-          Speed: <span>{cardData.speed} km/h</span>
-        </h3>
-        <h3>
-          Height: <span>{cardData.height} ft</span>
-        </h3>
-        <h3>
-          Weight: <span>{cardData.weight} kg</span>
-        </h3>
-        <h3>
-          Experience: <span>{cardData.experience}</span>
-        </h3>
-        <h3>
-          Abilities: <span className="badge">{cardData.abilities}</span>
-        </h3>
+    <div className="pokemon-card">
+      <div className="card-inner">
+        <div className="card-front">
+          <img
+            src={cardData.image}
+            alt={cardData.name}
+            className="pokemon-image"
+          />
+          <h2 className="pokemon-name">{cardData.name}</h2>
+          <div className="pokemon-types">
+            {cardData.types.map((type, index) => (
+              <span key={index} className={`type-badge type-${type}`}>
+                {type}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div
+          className="card-back"
+          style={{
+            background: `linear-gradient(
+      145deg,
+      rgba(68, 68, 68, 0.9),
+      rgba(34, 34, 34, 0.9)
+    ), url(${cardData.image})`,
+          }}
+        >
+          <div className="stat">
+            <span className="stat-label">Height</span>
+            <div className="stat-bar">
+              <div
+                className="stat-progress"
+                style={{ width: `${(cardData.height / 20) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+          <div className="stat">
+            <span className="stat-label">Weight</span>
+            <div className="stat-bar">
+              <div
+                className="stat-progress"
+                style={{ width: `${(cardData.weight / 1000) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+          <div className="stat">
+            <span className="stat-label">Speed</span>
+            <div className="stat-bar">
+              <div
+                className="stat-progress"
+                style={{ width: `${(cardData.speed / 150) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+          <div className="stat">
+            <span className="stat-label">Experience</span>
+            <div className="stat-bar">
+              <div
+                className="stat-progress"
+                style={{ width: `${(cardData.experience / 300) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ export default function Pokemon() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [totalLength, setTotalLength] = useState(0);
-  const [api,setApi] = useState("https://pokeapi.co/api/v2/pokemon?limit=6");
+  const [api, setApi] = useState("https://pokeapi.co/api/v2/pokemon?limit=12");
 
   const fetchPokemon = async () => {
     setLoading(true);
@@ -29,14 +29,16 @@ export default function Pokemon() {
   }, []);
 
   return (
-    <div className="pokemon-app">
-      <h1 className="heading">Catch 'Em All!</h1>
-      <input
-        type="text"
-        placeholder="Search Pokémon"
-        className="search-bar"
-        onChange={(e) => setSearch(e.target.value.toLowerCase())}
-      />
+    <div className="pokemon-container">
+      <h1 className="heading">Pokédex</h1>
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search Pokémon..."
+          className="search-bar"
+          onChange={(e) => setSearch(e.target.value.toLowerCase())}
+        />
+      </div>
       <InfiniteScroll
         dataLength={data.length}
         next={fetchPokemon}
@@ -44,15 +46,11 @@ export default function Pokemon() {
         loader={loading && <div className="loader"></div>}
         style={{ overflow: "hidden" }}
       >
-        <div className="card-container">
+        <div className="card-grid">
           {data
             .filter((pokemon) => pokemon.name.includes(search))
             .map((currEle, index) => (
-              <PokemonCards
-                key={index}
-                name={currEle.name}
-                source={currEle.url}
-              />
+              <PokemonCards key={index} name={currEle.name} source={currEle.url} />
             ))}
         </div>
       </InfiniteScroll>
